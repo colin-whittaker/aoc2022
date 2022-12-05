@@ -31,8 +31,6 @@ if __name__ == '__main__':
                 stacks[labels[p//4]].append(c)
             p += 4
     stacks2 = copy.deepcopy(stacks)
-    #print(stacks)
-    #print(instructions)
     for q,s,d in instructions:
         while q > 0:
             stacks[d].append(stacks[s].pop())
