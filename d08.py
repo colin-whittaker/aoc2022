@@ -18,6 +18,7 @@ def tree_visible(x,y,grid):
     # north
     if len([t for r in grid[0:y] for t in r[x] if t >= h]) == 0:
         return True
+    # south
     if len([t for r in grid[y+1:] for t in r[x] if t >= h]) == 0:
         return True
     return False
@@ -49,7 +50,6 @@ def tree_score(x,y,grid):
             break
     return e*w*n*s
 
-
 if __name__ == '__main__':
     lines = list(line.rstrip() for line in sys.stdin)
     #do stuff
@@ -69,5 +69,3 @@ if __name__ == '__main__':
         for i in range(0,max_x):
             scores.append(tree_score(i,j,grid))
     print(max(scores))
-
-
