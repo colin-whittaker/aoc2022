@@ -4,4 +4,5 @@ import sys
 if __name__ == '__main__':
     lines = list(line.rstrip() for line in sys.stdin)
     #do stuff
-    print(lines)
+    for line in lines:
+        print(line)
