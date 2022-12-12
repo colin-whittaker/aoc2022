@@ -29,11 +29,8 @@ def solve_grid(start,finish,grid):
     return(score)
 
 if __name__ == '__main__':
-    lines = list(line.rstrip() for line in sys.stdin)
+    grid = list(line.rstrip() for line in sys.stdin)
     #do stuff
-    grid = []
-    for line in lines:
-        grid.append(line)
     start, finish = None,None
     for y in range(0,len(grid)):
         if 'S' in grid[y]:
@@ -43,10 +40,8 @@ if __name__ == '__main__':
 
     score = solve_grid(start,finish,grid)
     print(score)
-    for y,row in enumerate(grid):
-        for x in [i for i, letter in enumerate(row) if letter == 'a']:
+    for y in range(0,len(grid)):
+        for x in [i for i, letter in enumerate(grid[y]) if letter == 'a']:
             result = solve_grid((x,y),finish,grid)
             score = result if result < score else score
     print(score)
-                
-
