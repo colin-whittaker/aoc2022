@@ -18,7 +18,7 @@ def solve_grid(start,finish,grid):
             return 10000000
         score, npos = heapq.heappop(costs)
         if npos == finish:
-            break
+            return(score)
         x,y = npos
         for i,j in directions:
             a,b = x+i,y+j
@@ -26,7 +26,6 @@ def solve_grid(start,finish,grid):
                 if (a,b) not in visit or score+1 < visit[(a,b)]:
                     heapq.heappush(costs,(score+1,(a,b)))
                     visit[(a,b)] = score + 1
-    return(score)
 
 if __name__ == '__main__':
     grid = list(line.rstrip() for line in sys.stdin)
