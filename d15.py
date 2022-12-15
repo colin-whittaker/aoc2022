@@ -6,8 +6,6 @@ def mdist(ax,ay,bx,by):
 
 def empty_point(x,y,data):
     for s_x,s_y,b_x,b_y in data:
-        if (x,y) == (s_x,s_y) or (x,y) == (b_x,b_y):
-            return False
         if mdist(s_x,s_y,x,y) <= mdist(s_x,s_y,b_x,b_y):
             return False
     return True
@@ -21,7 +19,9 @@ if __name__ == '__main__':
     lines = list(line.rstrip() for line in sys.stdin)
     #do stuff
     data=[]
-    beacons = set()
+    beacons = []
+    yt,lim = 2000000,4000000
+    #yt,lim = 10,20
     for line in lines:
         line = line.split(' ')
         s_x = int(line[2][2:-1])
@@ -29,29 +29,19 @@ if __name__ == '__main__':
         b_x = int(line[8][2:-1])
         b_y = int(line[9][2:])
         data.append((s_x,s_y,b_x,b_y))
-        beacons.add((b_x,b_y))
+        if b_y == yt:
+            beacons.append(b_y)
 
-    roi = set()
-    yt = 2000000
-    #yt = 10
+    roi = []
     for s_x,s_y,b_x,b_y in data:
         if s_y == yt:
-            roi.add((s_x,s_y))
-        #if b_y == yt:
-        #    roi.add((b_x,b_y))
+            roi.append(s_x)
         dlim = mdist(s_x,s_y,b_x,b_y)
-        if mdist(s_x,s_y,s_x,yt) > dlim:
-            continue
-        else:
-            roi.add((s_x,yt))
-            for i in range(1,dlim+1):
-                if mdist(s_x,s_y,s_x+i,yt) <= dlim:
-                    roi.add((s_x+i,yt))
-                if mdist(s_x,s_y,s_x-i,yt) <= dlim:
-                    roi.add((s_x-i,yt))
-    print(len(roi-beacons))
-    #lim = 20
-    lim=4000000
+        dnew = mdist(s_x,s_y,s_x,yt)
+        d = dlim - dnew
+        if dnew <= dlim:
+            roi.extend([x for x in range(s_x-d,s_x+d+1)])
+    print(len(set(roi)-set(beacons)))
     for s_x,s_y,b_x,b_y in data:
         d = mdist(s_x,s_y,b_x,b_y)
         for x,y in points_radius(s_x,s_y,d+1):
