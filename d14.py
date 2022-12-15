@@ -32,7 +32,7 @@ if __name__ == '__main__':
                 for i in range(min(start_x,end_x),max(start_x,end_x)+1):
                     grid[(i,start_y)] = '#'
     dims = (min(xs),max(xs),min(ys),max(ys))
-    print_grid(grid,dims)
+#    print_grid(grid,dims)
     grains = 0
     escape = False
     while not escape:
