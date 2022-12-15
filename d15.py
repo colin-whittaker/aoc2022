@@ -34,8 +34,6 @@ if __name__ == '__main__':
 
     roi = []
     for s_x,s_y,b_x,b_y in data:
-        if s_y == yt:
-            roi.append(s_x)
         dlim = mdist(s_x,s_y,b_x,b_y)
         dnew = mdist(s_x,s_y,s_x,yt)
         d = dlim - dnew
