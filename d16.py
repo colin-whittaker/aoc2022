@@ -30,8 +30,8 @@ def max_flow2(pos, done, time, elephant):
                 best = max(best, flow + max_flow2(node,new_done, time-2, elephant))
     for node in valves[pos]['nodes']:
         best = max(best, max_flow2(node, done, time-1, elephant))
-    if time == 26 and not elephant:
-        best = max(best, max_flow2('AA', done, 26, True))
+         if not elephant:
+            best = max(best, max_flow2('AA', done, 26, True))
     return best
 
 if __name__ == '__main__':
