@@ -1,7 +1,8 @@
 #!/usr/bin/env python3.10
 import sys
 
-def decode(l,t):
+def decode(nums,t):
+    l = nums.copy()
     for _ in range(t):
         for n,i in nums:
             idx = l.index((n,i))
@@ -19,8 +20,6 @@ if __name__ == '__main__':
     lines = list(line.rstrip() for line in sys.stdin)
     #do stuff
     nums = [(int(line),i) for i,line in enumerate(lines)]
-    l = nums.copy()
-    print(decode(l,1))
+    print(decode(nums,1))
     nums = [(x*811589153,i) for x,i in nums]
-    l = nums.copy()
-    print(decode(l,10))
+    print(decode(nums,10))
