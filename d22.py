@@ -1,7 +1,6 @@
 #!/usr/bin/env python3.10
 import sys
 
-
 def print_grid(grid,x,y):
     for j in range(y+1):
         print(''.join([grid[(i,j)] if (i,j) in grid else ' ' for i in range(x+1)]))
@@ -9,11 +8,10 @@ def print_grid(grid,x,y):
 if __name__ == '__main__':
     lines = list(line.rstrip() for line in sys.stdin)
     #do stuff
-    path = lines.pop()
-    lines.pop()
+    path = lines[-1]
     grid= {}
     max_x = 0
-    for y,line in enumerate(lines):
+    for y,line in enumerate(lines[:-2]):
         for x,c in enumerate(line):
             if c != ' ':
                 grid[(x,y)] = c
@@ -31,14 +29,10 @@ if __name__ == '__main__':
             steps.append(path[pos:i+1])
             pos = i+1
     steps.append(path[pos:])
-    steps2 = steps.copy()
     d = [(1,0),(0,1),(-1,0),(0,-1)]
-    f = 0
-    x = startx
-    y = 0
+    x,y,f = startx,0,0
 
-    while len(steps):
-        move = steps.pop(0)
+    for move in steps:
         if move[-1].isalpha():
             moves= int(move[:-1])
             turn = move[-1]
@@ -46,29 +40,24 @@ if __name__ == '__main__':
             moves= int(move)
             turn = None
         i,j = d[f]
-        while moves:
+        for _ in range(moves):
             if (x+i,y+j) in grid:
                 xi,yj = x+i,y+j
             else:
                 rx,ry = d[(f+2)%4]
-                xi,yj =x,y
+                xi,yj = x,y
                 while (xi+rx,yj+ry) in grid:
                     xi,yj = xi+rx,yj+ry
             if grid[(xi,yj)] == '.':
                 x,y = xi,yj
-            moves -= 1
         if turn is not None:
             z = 1 if turn == 'R' else -1
             f = (f+z)%4
 
     print(1000*(y+1) + 4*(x+1) + f)
 
-    f = 0
-    x = startx
-    y = 0
-    steps = steps2
-    while len(steps):
-        move = steps.pop(0)
+    x,y,f = startx,0,0
+    for move in steps:
         if move[-1].isalpha():
             moves= int(move[:-1])
             turn = move[-1]
@@ -76,7 +65,7 @@ if __name__ == '__main__':
             moves= int(move)
             turn = None
         i,j = d[f]
-        while moves:
+        for _ in range(moves):
             n = None
             if (x+i,y+j) in grid:
                 xi,yj = x+i,y+j
@@ -117,12 +106,8 @@ if __name__ == '__main__':
                 if n is not None:
                     f = n
                     i,j = d[f]
-
-            moves -= 1
-            #print(x,y,i,j,xi,yj,grid[(xi,yj)])
         if turn is not None:
             z = 1 if turn == 'R' else -1
             f = (f+z)%4
 
-    print(x,y,f)
     print(1000*(y+1) + 4*(x+1) + f)
